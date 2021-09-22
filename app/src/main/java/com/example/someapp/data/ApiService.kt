@@ -17,7 +17,7 @@ interface ApiService {
     fun getDataList(): Call<List<DataNetworkModel>>
 
     @GET("posts/{id}")
-    fun getData(@Path("id") id: Int): Call<DataNetworkModel>
+    fun getData(@Path("id") id: Long): Call<DataNetworkModel>
 
 
     companion object {
