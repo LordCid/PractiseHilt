@@ -1,6 +1,7 @@
 package com.example.someapp.data
 
 import com.example.someapp.data
+import com.example.someapp.domain.ResultState
 import com.example.someapp.networkData
 import com.example.someapp.otherData
 import com.example.someapp.otherNetworkData
@@ -55,7 +56,7 @@ class NetworkDataSourceImplTest {
 
             val actual = sut.getDataList()
 
-            assertEquals(Result.success(expected), actual)
+            assertEquals(expected, (actual as ResultState.Success).data)
         }
     }
 
@@ -67,7 +68,7 @@ class NetworkDataSourceImplTest {
 
             val actual = sut.getDataList()
 
-            assertEquals(Result.success(expected), actual)
+            assertEquals(expected, (actual as ResultState.Success).data)
         }
     }
 
@@ -78,7 +79,7 @@ class NetworkDataSourceImplTest {
 
             val actual = sut.getDataList()
 
-            assert(actual.isFailure)
+            assert(actual is ResultState.Error)
         }
     }
 
@@ -91,7 +92,7 @@ class NetworkDataSourceImplTest {
 
             val actual = sut.getData(someId)
 
-            assertEquals(Result.success(expected), actual)
+            assertEquals(expected, (actual as ResultState.Success).data)
         }
     }
 
@@ -104,7 +105,7 @@ class NetworkDataSourceImplTest {
 
             val actual = sut.getData(someId)
 
-            assertEquals(Result.success(expected), actual)
+            assertEquals(expected, (actual as ResultState.Success).data)
         }
     }
 
@@ -117,7 +118,7 @@ class NetworkDataSourceImplTest {
 
             val actual = sut.getData(someId)
 
-            assert(actual.isFailure)
+            assert(actual is ResultState.Error)
         }
     }
 

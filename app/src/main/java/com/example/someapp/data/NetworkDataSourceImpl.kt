@@ -1,28 +1,29 @@
 package com.example.someapp.data
 
 import com.example.someapp.domain.DataModel
+import com.example.someapp.domain.ResultState
 import com.example.someapp.domain.toDomain
 import retrofit2.awaitResponse
 
 class NetworkDataSourceImpl(private val apiService: ApiService) : NetworkDataSource {
-    override suspend fun getDataList(): Result<List<DataModel>> {
+    override suspend fun getDataList(): ResultState<List<DataModel>> {
         return runCatching { apiService.getDataList().awaitResponse() }.fold(
             onSuccess = {
                 val resultList = it.body()?.let { response ->
                     response.map { netModel -> netModel.toDomain() }
                 }.orEmpty()
-                Result.success(resultList)
+                ResultState.Success(resultList)
             },
-            onFailure = { Result.failure(it) }
+            onFailure = { ResultState.Error }
         )
     }
 
-    override suspend fun getData(id: Long): Result<DataModel> {
+    override suspend fun getData(id: Long): ResultState<DataModel> {
         return runCatching { apiService.getData(id).awaitResponse() }.fold(
             onSuccess = {
-                it.body()?.let { result -> Result.success(result.toDomain()) } ?:Result.failure(Throwable())
+                it.body()?.let { result -> ResultState.Success(result.toDomain()) } ?:ResultState.Error
             },
-            onFailure = { Result.failure(it) }
+            onFailure = { ResultState.Error}
         )
     }
 }
