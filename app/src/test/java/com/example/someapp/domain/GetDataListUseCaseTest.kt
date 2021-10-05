@@ -11,7 +11,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
-class GetDataListUseCaseImplTest {
+class GetDataListUseCaseTest {
 
     private lateinit var sut: GetDataListUseCase
     private val networkDataSource = mock<NetworkDataSource>()
