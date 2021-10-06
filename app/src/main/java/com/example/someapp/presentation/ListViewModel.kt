@@ -16,7 +16,7 @@ class ListViewModel(
     private val getDataListUseCase: GetDataListUseCase
 ) : ViewModel() {
 
-    private val _viewState: MutableLiveData<ListViewState> = MutableLiveData()
+    private val _viewState = MutableLiveData<ListViewState>()
     val viewState: LiveData<ListViewState>
         get() = _viewState
 

@@ -5,31 +5,28 @@ import androidx.lifecycle.Observer
 import com.example.someapp.data
 import com.example.someapp.domain.DataModel
 import com.example.someapp.domain.GetDataListUseCase
+import com.example.someapp.domain.GetDataUseCase
 import com.example.someapp.domain.ResultState
 import com.example.someapp.otherData
 import com.nhaarman.mockitokotlin2.*
+import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import org.junit.After
-import org.junit.Assert.*
+import org.junit.*
 
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+class DetailViewModelTest {
 
-class ListViewModelTest {
-
-    private lateinit var sut: ListViewModel
-    private val getDataListUseCase = mock<GetDataListUseCase>()
-    private val observer = mock<Observer<ListViewState>>()
+    private lateinit var sut: DetailViewModel
+    private val getDataUseCase = mock<GetDataUseCase>()
+    private val observer = mock<Observer<DetailViewState>>()
     @ExperimentalCoroutinesApi
     private val dispatcher = TestCoroutineDispatcher()
 
-    private val captorScreenState = argumentCaptor<ListViewState>()
+    private val captorScreenState = argumentCaptor<DetailViewState>()
 
     @Rule
     @JvmField
@@ -39,7 +36,7 @@ class ListViewModelTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(dispatcher)
-        sut =  ListViewModel(dispatcher, getDataListUseCase)
+        sut =  DetailViewModel(dispatcher, getDataUseCase)
     }
 
     @ExperimentalCoroutinesApi
@@ -49,28 +46,31 @@ class ListViewModelTest {
         dispatcher.cleanupTestCoroutines()
     }
 
+
     @Test
     fun `Should show Loading screen when invoke use case`() {
         runBlocking {
+            val someId = 123L
             val expected = ViewState.Loading
 
             sut.viewState.observeForever(observer)
-            sut.getDataList()
+            sut.getData(someId)
 
-            verify(getDataListUseCase).invoke()
+            verify(getDataUseCase).invoke(someId)
             verify(observer).onChanged(expected)
 
         }
     }
 
     @Test
-    fun `Given data list get, it is shown into UI`() {
+    fun `Given get data success, result is shown into ShowDataState`() {
         runBlocking {
-            val expectedList = listOf(data, data)
+            val someId = 123L
+            val expectedList = data
             givenSuccessResultWithValues(expectedList)
 
             sut.viewState.observeForever(observer)
-            sut.getDataList()
+            sut.getData(someId)
 
             verify(observer, times(2)).onChanged(captorScreenState.capture())
             val capturedState = captorScreenState.secondValue as ViewState.ShowData
@@ -79,13 +79,14 @@ class ListViewModelTest {
     }
 
     @Test
-    fun `Given OTHER group list getted, it is shown into UI`() {
+    fun `Given get OTHER data success, result is shown into ShowDataState`() {
         runBlocking {
-            val expectedList =  listOf(otherData, otherData)
+            val someId = 456L
+            val expectedList = otherData
             givenSuccessResultWithValues(expectedList)
 
             sut.viewState.observeForever(observer)
-            sut.getDataList()
+            sut.getData(someId)
 
             verify(observer, times(2)).onChanged(captorScreenState.capture())
             val capturedState = captorScreenState.secondValue as ViewState.ShowData
@@ -96,21 +97,23 @@ class ListViewModelTest {
     @Test
     fun `Given failure when getting group list, error is shown in the UI`() {
         runBlocking {
+            val someId = 123L
             givenFailureResult()
 
             sut.viewState.observeForever(observer)
-            sut.getDataList()
+            sut.getData(someId)
 
             verify(observer, times(2)).onChanged(captorScreenState.capture())
             assert(captorScreenState.secondValue is ViewState.Error)
         }
     }
 
-    private suspend fun givenSuccessResultWithValues(list: List<DataModel>) {
-        given(getDataListUseCase.invoke()).willReturn(ResultState.Success(list))
+    private suspend fun givenSuccessResultWithValues(data: DataModel) {
+        given(getDataUseCase.invoke(any())).willReturn(ResultState.Success(data))
     }
 
     private suspend fun givenFailureResult() {
-        given(getDataListUseCase.invoke()).willReturn(ResultState.Error)
+        given(getDataUseCase.invoke(any())).willReturn(ResultState.Error)
     }
+
 }

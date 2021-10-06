@@ -7,4 +7,6 @@ sealed class ViewState<out T> {
     class ShowData<T>(val data: T) : ViewState<T>()
     object Error : ViewState<Nothing>()
 }
+
 typealias ListViewState = ViewState<List<DataModel>>
+typealias DetailViewState = ViewState<DataModel>

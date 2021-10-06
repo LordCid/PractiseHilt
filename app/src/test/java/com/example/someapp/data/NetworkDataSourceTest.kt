@@ -15,7 +15,7 @@ import org.junit.Before
 import org.junit.Test
 import retrofit2.mock.Calls
 
-class NetworkDataSourceImplTest {
+class NetworkDataSourceTest {
 
     private lateinit var sut: NetworkDataSource
     private val apiService = mock<ApiService>()
