@@ -7,6 +7,7 @@ import com.example.someapp.domain.DataModel
 import com.example.someapp.domain.GetDataListUseCase
 import com.example.someapp.domain.ResultState
 import com.example.someapp.otherData
+import com.example.someapp.presentation.list.ListViewModel
 import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -1,4 +1,4 @@
-package com.example.someapp.presentation
+package com.example.someapp.presentation.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,10 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.someapp.domain.GetDataListUseCase
 import com.example.someapp.domain.fold
+import com.example.someapp.presentation.ListViewState
+import com.example.someapp.presentation.ViewState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.contracts.ExperimentalContracts
 
 class ListViewModel(
     private val ioDispatcher: CoroutineDispatcher,

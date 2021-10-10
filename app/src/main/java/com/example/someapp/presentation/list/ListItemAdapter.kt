@@ -1,0 +1,59 @@
+package com.example.someapp.presentation.list
+
+import androidx.recyclerview.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.example.someapp.databinding.FragmentListBinding
+import com.example.someapp.databinding.ItemListBinding
+import com.example.someapp.domain.DataModel
+
+import com.example.someapp.presentation.list.placeholder.PlaceholderContent.PlaceholderItem
+import kotlin.properties.Delegates
+
+/**
+ * [RecyclerView.Adapter] that can display a [PlaceholderItem].
+ * TODO: Replace the implementation with code for your data type.
+ */
+class ListItemAdapter() : RecyclerView.Adapter<ListItemAdapter.ItemViewHolder>() {
+
+    var dataList: List<DataModel> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
+        if (oldValue != newValue) {
+            notifyDataSetChanged()
+        }
+    }
+
+    var onClickItem: (Int) -> Unit = {}
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
+        val inflater: LayoutInflater = LayoutInflater.from(parent.context)
+        val itemListBinding = ItemListBinding.inflate(inflater, parent, false)
+        return ItemViewHolder(itemListBinding, onClickItem)
+
+
+    }
+
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        val item = dataList[position]
+//        holder.idView.text = item.id
+//        holder.contentView.text = item.content
+    }
+
+    override fun getItemCount(): Int = dataList.size
+
+    inner class ItemViewHolder(
+        binding: ItemListBinding,
+        onClick: (Int) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bindData(data: DataModel) {
+
+        }
+//        val idView: TextView = binding.itemNumber
+//        val contentView: TextView = binding.content
+//
+//        override fun toString(): String {
+//            return super.toString() + " '" + contentView.text + "'"
+//        }
+    }
+
+}
