@@ -4,8 +4,11 @@ import com.example.someapp.domain.DataModel
 import com.example.someapp.domain.ResultState
 import com.example.someapp.domain.toDomain
 import retrofit2.awaitResponse
+import javax.inject.Inject
 
-class NetworkDataSourceImpl(private val apiService: ApiService) : NetworkDataSource {
+class NetworkDataSourceImpl @Inject constructor(
+    private val apiService: ApiService
+) : NetworkDataSource {
     override suspend fun getDataList(): ResultState<List<DataModel>> {
         return runCatching { apiService.getDataList().awaitResponse() }.fold(
             onSuccess = {
@@ -21,9 +24,10 @@ class NetworkDataSourceImpl(private val apiService: ApiService) : NetworkDataSou
     override suspend fun getData(id: Long): ResultState<DataModel> {
         return runCatching { apiService.getData(id).awaitResponse() }.fold(
             onSuccess = {
-                it.body()?.let { result -> ResultState.Success(result.toDomain()) } ?:ResultState.Error
+                it.body()?.let { result -> ResultState.Success(result.toDomain()) }
+                    ?: ResultState.Error
             },
-            onFailure = { ResultState.Error}
+            onFailure = { ResultState.Error }
         )
     }
 }

@@ -40,7 +40,7 @@ class ListViewModelTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(dispatcher)
-        sut =  ListViewModel(dispatcher, getDataListUseCase)
+        sut =  ListViewModel(getDataListUseCase, dispatcher)
     }
 
     @ExperimentalCoroutinesApi

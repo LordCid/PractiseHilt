@@ -14,7 +14,7 @@ import kotlin.properties.Delegates
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
  * TODO: Replace the implementation with code for your data type.
  */
-class ListItemAdapter() : RecyclerView.Adapter<ListItemAdapter.ItemViewHolder>() {
+class ListItemAdapter : RecyclerView.Adapter<ListItemAdapter.ItemViewHolder>() {
 
     var dataList: List<DataModel> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
         if (oldValue != newValue) {

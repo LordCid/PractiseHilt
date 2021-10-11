@@ -1,15 +1,19 @@
 package com.example.someapp.presentation.list
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.someapp.R
 import com.example.someapp.databinding.FragmentListBinding
+import com.example.someapp.domain.DataModel
+import com.example.someapp.presentation.ViewState
 import com.example.someapp.presentation.list.placeholder.PlaceholderContent
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,6 +27,10 @@ class ListFragment : Fragment() {
     private val bindingView get() = _bindingView!!
 
     private lateinit var listAdapter: ListItemAdapter
+
+    private val viewModel: ListViewModel by viewModels()
+
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +47,7 @@ class ListFragment : Fragment() {
     }
 
     private fun setUpUI() {
+        progressDialog = ProgressDialog(context)
         listAdapter = ListItemAdapter()
         bindingView.list.apply {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -53,8 +62,31 @@ class ListFragment : Fragment() {
     }
 
     private fun setViewModel() {
+        viewModel.viewState.observe(::getLifecycle, ::updateUI)
+        viewModel.getDataList()
     }
 
+    private fun updateUI(viewState: ViewState<List<DataModel>>) {
+        when(viewState){
+            is ViewState.ShowData -> showData(viewState.data)
+            ViewState.Error -> showErrorMessage()
+            ViewState.Loading -> showLoadingDialogFragment()
+        }
+    }
+
+
+    private fun showData(data: List<DataModel>){
+        progressDialog.dismiss()
+        listAdapter.dataList = data
+    }
+    private fun showLoadingDialogFragment() {
+        progressDialog.setMessage(getString(R.string.downloading_title_dialog))
+        progressDialog.show()
+    }
+
+    private fun showErrorMessage() {
+        TODO("Not yet implemented")
+    }
 
     override fun onDestroy() {
         super.onDestroy()

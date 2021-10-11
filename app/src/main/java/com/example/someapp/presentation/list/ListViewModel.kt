@@ -8,13 +8,16 @@ import com.example.someapp.domain.GetDataListUseCase
 import com.example.someapp.domain.fold
 import com.example.someapp.presentation.ListViewState
 import com.example.someapp.presentation.ViewState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class ListViewModel(
+@HiltViewModel
+class ListViewModel @Inject constructor(
+    private val getDataListUseCase: GetDataListUseCase,
     private val ioDispatcher: CoroutineDispatcher,
-    private val getDataListUseCase: GetDataListUseCase
 ) : ViewModel() {
 
     private val _viewState = MutableLiveData<ListViewState>()

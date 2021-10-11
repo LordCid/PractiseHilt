@@ -1,20 +1,21 @@
 package com.example.someapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.someapp.data.ApiService
 import com.example.someapp.databinding.ActivityMainBinding
-import com.example.someapp.domain.ResultState
 import com.example.someapp.domain.toDomain
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
 
     private lateinit var bindingView : ActivityMainBinding
@@ -24,6 +25,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

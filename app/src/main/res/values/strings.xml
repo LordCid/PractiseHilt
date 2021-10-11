@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SomeApp</string>
+    <string name="downloading_title_dialog">Descargando</string>
 </resources>
