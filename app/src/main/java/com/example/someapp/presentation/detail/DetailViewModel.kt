@@ -1,4 +1,4 @@
-package com.example.someapp.presentation
+package com.example.someapp.presentation.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.someapp.domain.GetDataUseCase
 import com.example.someapp.domain.fold
+import com.example.someapp.presentation.DetailViewState
+import com.example.someapp.presentation.ViewState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

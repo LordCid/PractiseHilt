@@ -1,10 +1,13 @@
 package com.example.someapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.someapp.data.ApiService
 import com.example.someapp.databinding.ActivityMainBinding
@@ -29,20 +32,20 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_MiBUS_NoActionBar)
         super.onCreate(savedInstanceState)
         bindingView = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bindingView.root)
 
-        setToolBar()
+        setSupportActionBar(bindingView.toolbar)
         navigationFrameworkSetUp()
 
-        testApi()
+//        testApi()
     }
 
-    private fun setToolBar() {
-        val toolBar: Toolbar = bindingView.toolbar
-        setSupportActionBar(toolBar)
-    }
+    override fun onSupportNavigateUp() = navController.navigateUp(appBarConfiguration)
+            || super.onSupportNavigateUp()
+
 
     private fun testApi(){
         launch {
@@ -53,9 +56,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                                 netModel -> netModel.toDomain()
                         }
                     }.orEmpty()
-                    print(resultList)
+                    Log.d("TEST", "Succed: $resultList")
                 },
-                onFailure = { print("Error $it") }
+                onFailure = { Log.d("TEST", "Error $it")}
             )
         }
     }

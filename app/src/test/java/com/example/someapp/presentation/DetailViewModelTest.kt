@@ -4,10 +4,10 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.someapp.data
 import com.example.someapp.domain.DataModel
-import com.example.someapp.domain.GetDataListUseCase
 import com.example.someapp.domain.GetDataUseCase
 import com.example.someapp.domain.ResultState
 import com.example.someapp.otherData
+import com.example.someapp.presentation.detail.DetailViewModel
 import com.nhaarman.mockitokotlin2.*
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers

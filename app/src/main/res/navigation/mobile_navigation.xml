@@ -11,6 +11,18 @@
         android:label=""
         tools:layout="@layout/fragment_list">
 
+        <action
+            android:id="@+id/action_nav_list_to_nav_detail"
+            app:destination="@id/nav_detail" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_detail"
+        android:name="com.example.someapp.presentation.detail.DetailFragment"
+        android:label=""
+        tools:layout="@layout/fragment_detail">
+
     </fragment>
 
 </navigation>

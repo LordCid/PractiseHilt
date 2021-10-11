@@ -22,7 +22,7 @@ class ListItemAdapter : RecyclerView.Adapter<ListItemAdapter.ItemViewHolder>() {
         }
     }
 
-    var onClickItem: (Int) -> Unit = {}
+    var onClickItem: (Long) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -33,27 +33,23 @@ class ListItemAdapter : RecyclerView.Adapter<ListItemAdapter.ItemViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = dataList[position]
-//        holder.idView.text = item.id
-//        holder.contentView.text = item.content
+        holder.bindData(dataList[position])
     }
 
     override fun getItemCount(): Int = dataList.size
 
     inner class ItemViewHolder(
-        binding: ItemListBinding,
-        onClick: (Int) -> Unit
+        private val binding: ItemListBinding,
+        private val onClick: (Long) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindData(data: DataModel) {
-
+            with(binding){
+                root.setOnClickListener { onClick(data.id) }
+                title.text = data.title
+                body.text = data.body
+            }
         }
-//        val idView: TextView = binding.itemNumber
-//        val contentView: TextView = binding.content
-//
-//        override fun toString(): String {
-//            return super.toString() + " '" + contentView.text + "'"
-//        }
     }
 
 }
