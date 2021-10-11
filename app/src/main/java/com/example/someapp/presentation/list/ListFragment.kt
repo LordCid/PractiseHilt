@@ -55,12 +55,12 @@ class ListFragment : Fragment() {
         bindingView.list.apply {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             this.adapter = listAdapter
-//            addItemDecoration(
-//                DividerItemDecoration(
-//                    context,
-//                    layoutManager.getOrientation()
-//                )
-//            )
+            addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    (layoutManager as LinearLayoutManager).orientation
+                )
+            )
         }
 
         listAdapter.onClickItem = {
