@@ -30,38 +30,17 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.Theme_MiBUS_NoActionBar)
         super.onCreate(savedInstanceState)
         bindingView = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bindingView.root)
 
-        setSupportActionBar(bindingView.toolbar)
         navigationFrameworkSetUp()
-
-//        testApi()
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp(appBarConfiguration)
             || super.onSupportNavigateUp()
 
-
-    private fun testApi(){
-        launch {
-            runCatching { ApiService.create().getDataList().awaitResponse() }.fold(
-                onSuccess = {
-                    val resultList = it.body()?.let { response ->
-                        response.map {
-                                netModel -> netModel.toDomain()
-                        }
-                    }.orEmpty()
-                    Log.d("TEST", "Succed: $resultList")
-                },
-                onFailure = { Log.d("TEST", "Error $it")}
-            )
-        }
-    }
 
     private fun navigationFrameworkSetUp() {
         appBarConfiguration = AppBarConfiguration(navigationIds)
