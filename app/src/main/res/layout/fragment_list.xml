@@ -29,6 +29,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="gone"
-        tools:text="@string/error"
+        android:text="@string/error"
         tools:visibility="visible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -69,6 +69,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun showErrorMessage() {
+        progressDialog.dismiss()
         with(bindingView){
             content.visibility = View.GONE
             error.visibility = View.VISIBLE

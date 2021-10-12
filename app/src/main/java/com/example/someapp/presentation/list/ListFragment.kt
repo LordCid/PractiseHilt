@@ -94,6 +94,7 @@ class ListFragment : Fragment() {
     }
 
     private fun showErrorMessage() {
+        progressDialog.dismiss()
         with(bindingView){
             list.visibility = GONE
             error.visibility = VISIBLE
