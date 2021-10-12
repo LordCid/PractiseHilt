@@ -23,6 +23,11 @@
         android:label=""
         tools:layout="@layout/fragment_detail">
 
+        <argument
+            android:name="id"
+            android:defaultValue="-1L"
+            app:argType="long" />
+
     </fragment>
 
 </navigation>

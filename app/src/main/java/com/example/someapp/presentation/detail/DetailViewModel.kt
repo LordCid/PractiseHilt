@@ -8,11 +8,14 @@ import com.example.someapp.domain.GetDataUseCase
 import com.example.someapp.domain.fold
 import com.example.someapp.presentation.DetailViewState
 import com.example.someapp.presentation.ViewState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class DetailViewModel(
+@HiltViewModel
+class DetailViewModel @Inject constructor (
     private val ioDispatcher: CoroutineDispatcher,
     private val getDataUseCase: GetDataUseCase
 ) : ViewModel() {

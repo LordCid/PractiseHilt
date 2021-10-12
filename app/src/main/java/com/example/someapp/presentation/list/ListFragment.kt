@@ -2,22 +2,20 @@ package com.example.someapp.presentation.list
 
 import android.app.ProgressDialog
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.someapp.R
 import com.example.someapp.databinding.FragmentListBinding
 import com.example.someapp.domain.DataModel
 import com.example.someapp.presentation.ViewState
-import com.example.someapp.presentation.list.placeholder.PlaceholderContent
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.recyclerview.widget.DividerItemDecoration
 
 
 /**
@@ -64,9 +62,8 @@ class ListFragment : Fragment() {
         }
 
         listAdapter.onClickItem = {
-//            val intent = Intent(activity, DetailActivity::class.java)
-//            intent.putExtra(GROUP_ID, it)
-//            startActivity(intent)
+            val action = ListFragmentDirections.actionNavListToNavDetail(id = it)
+            findNavController().navigate(action)
         }
     }
 
@@ -85,19 +82,16 @@ class ListFragment : Fragment() {
 
 
     private fun showData(data: List<DataModel>) {
-        Log.d("TEST", "ShowData $data")
         progressDialog.dismiss()
         listAdapter.dataList = data
     }
 
     private fun showLoadingDialogFragment() {
-        Log.d("TEST", "ShowLoading")
         progressDialog.setMessage(getString(R.string.downloading_title_dialog))
         progressDialog.show()
     }
 
     private fun showErrorMessage() {
-        Log.d("TEST", "ShowError")
     }
 
     override fun onDestroy() {

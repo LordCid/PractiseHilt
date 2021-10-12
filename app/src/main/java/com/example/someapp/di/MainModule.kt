@@ -5,6 +5,8 @@ import com.example.someapp.data.NetworkDataSource
 import com.example.someapp.data.NetworkDataSourceImpl
 import com.example.someapp.domain.GetDataListUseCase
 import com.example.someapp.domain.GetDataListUseCaseImpl
+import com.example.someapp.domain.GetDataUseCase
+import com.example.someapp.domain.GetDataUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,5 +27,11 @@ class MainModule {
     @Singleton
     fun providesGetDataListUseCase(networkDataSource: NetworkDataSource): GetDataListUseCase {
         return GetDataListUseCaseImpl(networkDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGetDataUseCase(networkDataSource: NetworkDataSource): GetDataUseCase {
+        return GetDataUseCaseImpl(networkDataSource)
     }
 }
