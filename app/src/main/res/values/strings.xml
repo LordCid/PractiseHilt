@@ -3,4 +3,6 @@
     <string name="downloading_title_dialog">Descargando</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="detail_fragment">Detail Fragment</string>
+    <string name="list_fragment">List Fragment</string>
 </resources>
