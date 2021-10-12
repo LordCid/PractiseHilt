@@ -69,6 +69,10 @@ class DetailFragment : Fragment() {
     }
 
     private fun showErrorMessage() {
+        with(bindingView){
+            content.visibility = View.GONE
+            error.visibility = View.VISIBLE
+        }
     }
 
 

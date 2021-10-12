@@ -4,6 +4,8 @@ import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -92,6 +94,10 @@ class ListFragment : Fragment() {
     }
 
     private fun showErrorMessage() {
+        with(bindingView){
+            list.visibility = GONE
+            error.visibility = VISIBLE
+        }
     }
 
     override fun onDestroy() {
